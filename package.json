@@ -1,0 +1,48 @@
+{
+  "name": "happy-mongoose-timestamps",
+  "version": "1.0.0",
+  "description": "Mongoose plugin for createdAt and updatedAt timestamps.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint --ignore-path .gitignore --ignore-pattern node_modules -- .",
+    "build": "babel src -s -d lib --presets @babel/env",
+    "test": "echo 'Tests are occuring, yes.'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/x0bile/happy-mongoose-timestamps.git"
+  },
+  "keywords": [
+    "mongoose",
+    "plugin",
+    "createdAt",
+    "updatedAt",
+    "created",
+    "updated",
+    "at",
+    "happy",
+    "mongo",
+    "mongodb"
+  ],
+  "author": "Adam Peryman <adam.peryman@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/x0bile/happy-mongoose-timestamps/issues"
+  },
+  "homepage": "https://github.com/x0bile/happy-mongoose-timestamps#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.36",
+    "@babel/core": "^7.0.0-beta.36",
+    "@babel/node": "^7.0.0-beta.36",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.36",
+    "@babel/polyfill": "^7.0.0-beta.36",
+    "@babel/preset-env": "^7.0.0-beta.36",
+    "babel-eslint": "^8.1.2",
+    "eslint": "^4.14.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1"
+  }
+}

@@ -1,0 +1,7 @@
+--smart-case
+
+--ignore-dir=build
+--ignore-dir=node_modules
+
+--ignore-file=is:yarn.lock
+--ignore-file=is:.log
