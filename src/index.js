@@ -3,6 +3,7 @@ import get from 'lodash/get'
 const $schema = Symbol('schema')
 const $createdAt = Symbol('createdAt')
 const $updatedAt = Symbol('updatedAt')
+const $blacklist = Symbol('blacklist')
 
 class HappyMongooseTimestamps {
   constructor (schema, options = {}) {
@@ -10,6 +11,7 @@ class HappyMongooseTimestamps {
 
     this[$createdAt] = options.createdAt || 'createdAt'
     this[$updatedAt] = options.updatedAt || 'updatedAt'
+    this[$blacklist] = options.blacklist || {}
 
     this.validateField((this[$schema].path(this[$createdAt])), this[$createdAt])
     this.validateField((this[$schema].path(this[$updatedAt])), this[$updatedAt])
