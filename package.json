@@ -1,6 +1,6 @@
 {
   "name": "happy-mongoose-timestamps",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Mongoose plugin for createdAt and updatedAt timestamps.",
   "main": "index.js",
   "scripts": {
