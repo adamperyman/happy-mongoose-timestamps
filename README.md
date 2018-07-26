@@ -1,6 +1,13 @@
 # happy-mongoose-timestamps
 A simple mongoose plugin to support createdAt and updatedAt fields, with blacklist support.
 
+# What?
+Add this plugin to any Mongoose schema so that when any document based on the attached schema is updated then that document will have its `updatedAt` field set to the current date.
+
+Also supports the handling of `createdAt` and/or `updatedAt` fields on `.save` operations.
+
+You can blacklist specific fields or entire sub-objects so that they do not trigger the modification of `updatedAt` when documents are updated.
+
 # Installation
 ```
 $ npm i --save happy-mongoose-timestamps
