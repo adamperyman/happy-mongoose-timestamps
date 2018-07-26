@@ -1,0 +1,14 @@
+const DATA_FIELDS = {
+  DEFAULT_CREATED_AT_FIELD: 'createdAt',
+  DEFAULT_UPDATED_AT_FIELD: 'updatedAt'
+}
+
+const MONGO_OPERATORS = {
+  SET_OPERATOR: '$set',
+  SET_ON_INSERT_OPERATOR: '$setOnInsert'
+}
+
+export {
+  DATA_FIELDS,
+  MONGO_OPERATORS
+}

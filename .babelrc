@@ -3,5 +3,13 @@
   "presets": [
     [ "@babel/preset-env", { modules: false } ]
   ],
-  "plugins": []
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./src"],
+      "alias": {
+        "$utils": "./utils",
+        "$constants": "./constants"
+      }
+    }]
+  ]
 }
