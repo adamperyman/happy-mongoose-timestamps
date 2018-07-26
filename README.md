@@ -11,10 +11,12 @@ $ yarn add happy-mongoose-timestamps
 ```
 
 # Options
+* `blacklist (default: [])`: Any fields which, when updated, should **NOT** trigger `updatedAt` to be modified.
 * `createdAt (default: createdAt)`: Name of the schema field to store the created at value.
 * `updatedAt (default: updatedAt)`: Name of the schema field to store the updated at value.
 * `shouldUpdateSchema (default: false)`: Whether or not the plugin should add `createdAt` and `updatedAt` fields to the given schema, if they do not already exist.
-* `blacklist (default: [])`: Any fields which, when updated, should **NOT** trigger `updatedAt` to be modified.
+* `disableSaveHook (default: false)`: Whether or not to disable the pre-save hook functionality.
+* `disableUpdateHook (default: false)`: Whether or not to disable the pre-update hook functionality.
 
 # Usage
 ```

@@ -32,6 +32,8 @@ const $updatedAt = Symbol('updatedAt')
  * @param {String} [options.updatedAt='updatedAt'] - Name of the new updatedAt field.
  * @param {Boolean} [options.shouldUpdateSchema=false] - Will add createdAt and updatedAt fields to the given schema if they do not exist.
  * @param {[String]} [options.blacklist=[]] - Contains an array of field names which will NOT trigger save or update hooks.
+ * @param {Boolean} [options.disableSaveHook=false] - Will disable pre hook functionality for SAVE operations.
+ * @param {Boolean} [options.disableUpdateHook=false] - Will disable pre hook functionality for UPDATE operations.
  */
 class HappyMongooseTimestamps {
   constructor (schema, options = {}) {
@@ -39,10 +41,10 @@ class HappyMongooseTimestamps {
       throw new Error('Schema is required.')
     }
 
-    this[$blacklist] = options.blacklist || []
-    this[$options] = options || {}
     this[$schema] = schema
+    this[$options] = options
 
+    this[$blacklist] = options.blacklist || []
     this[$createdAt] = options.createdAt || DEFAULT_CREATED_AT_FIELD
     this[$updatedAt] = options.updatedAt || DEFAULT_UPDATED_AT_FIELD
 
@@ -88,6 +90,12 @@ class HappyMongooseTimestamps {
    * Attaches the new save hook to the given schema.
    */
   save () {
+    const shouldDisableSaveHook = this[$options]['disableSaveHook']
+
+    if (shouldDisableSaveHook) {
+      return
+    }
+
     this[$schema].pre('save', this.getSaveHook())
   }
 
@@ -95,6 +103,12 @@ class HappyMongooseTimestamps {
    * Attaches the new update hook to the given schema.
    */
   update () {
+    const shouldDisableUpdateHook = this[$options]['disableUpdateHook']
+
+    if (shouldDisableUpdateHook) {
+      return
+    }
+
     this[$schema].pre('update', this.getUpdateHook())
   }
 
