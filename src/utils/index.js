@@ -36,7 +36,7 @@ export const getUpdateFields = (updateOperation, operator) => {
     throw new Error(`operator is undefined. Expected ${SET_OPERATOR} or ${SET_ON_INSERT_OPERATOR}.`)
   }
 
-  return (updateOperation[operator] || {})
+  return updateOperation[operator]
 }
 
 /**

@@ -140,10 +140,10 @@ class HappyMongooseTimestamps {
       const currentSetFields = getUpdateFields(currentUpdateOp, SET_OPERATOR)
       const currentSetOnInsertFields = getUpdateFields(currentUpdateOp, SET_ON_INSERT_OPERATOR)
 
-      const blacklistDoesApply = blacklistedFieldExists(blacklist, currentSetFields) ||
-        blacklistedFieldExists(blacklist, currentSetOnInsertFields)
+      const setFieldsAreBlacklisted = currentSetFields && blacklistedFieldExists(blacklist, currentSetFields)
+      const setOnInsertFieldsAreBlacklisted = currentSetOnInsertFields && blacklistedFieldExists(blacklist, currentSetOnInsertFields)
 
-      if (blacklistDoesApply) {
+      if (setFieldsAreBlacklisted || setOnInsertFieldsAreBlacklisted) {
         return next()
       }
 
