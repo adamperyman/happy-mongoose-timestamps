@@ -34,6 +34,7 @@ const $updatedAt = Symbol('updatedAt')
  * @param {[String]} [options.blacklist=[]] - Contains an array of field names which will NOT trigger save or update hooks.
  * @param {Boolean} [options.disableSaveHook=false] - Will disable pre hook functionality for SAVE operations.
  * @param {Boolean} [options.disableUpdateHook=false] - Will disable pre hook functionality for UPDATE operations.
+ * @param {Boolean} [options.disableUpdateOneHook=false] - Will disable pre hook functionality for updateOne operations.
  */
 class HappyMongooseTimestamps {
   constructor (schema, options = {}) {
@@ -113,6 +114,19 @@ class HappyMongooseTimestamps {
   }
 
   /**
+   * Attaches the new updateOne hook to the given schema.
+   */
+  updateOne () {
+    const shouldDisableUpdateOneHook = this[$options]['disableUpdateOneHook']
+
+    if (shouldDisableUpdateOneHook) {
+      return
+    }
+
+    this[$schema].pre('updateOne', this.getUpdateHook())
+  }
+
+  /**
    * Generates the function to be executed BEFORE any SAVE operations on the given schema.
    *
    * @returns {Function} Hook function to be applied to any SAVE operations.
@@ -183,4 +197,5 @@ export default (schema, options) => {
 
   plugin.save()
   plugin.update()
+  plugin.updateOne()
 }

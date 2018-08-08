@@ -24,6 +24,7 @@ $ yarn add happy-mongoose-timestamps
 * `shouldUpdateSchema (default: false)`: Whether or not the plugin should add `createdAt` and `updatedAt` fields to the given schema, if they do not already exist.
 * `disableSaveHook (default: false)`: Whether or not to disable the pre-save hook functionality.
 * `disableUpdateHook (default: false)`: Whether or not to disable the pre-update hook functionality.
+* `disableUpdateOneHook (default: false)`: Whether or not to disable the pre-updateOne hook functionality.
 
 # Usage
 ```
