@@ -16,7 +16,7 @@ const {
   SET_ON_INSERT_OPERATOR
 } = MONGO_OPERATORS
 
-const $blacklist = Symbol('blackist')
+const $blacklist = Symbol('blacklist')
 const $options = Symbol('options')
 const $schema = Symbol('schema')
 
