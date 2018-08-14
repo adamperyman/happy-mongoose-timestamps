@@ -91,12 +91,6 @@ class HappyMongooseTimestamps {
    * Attaches the new save hook to the given schema.
    */
   save () {
-    const shouldDisableSaveHook = this[$options]['disableSaveHook']
-
-    if (shouldDisableSaveHook) {
-      return
-    }
-
     this[$schema].pre('save', this.getSaveHook())
   }
 
@@ -134,8 +128,13 @@ class HappyMongooseTimestamps {
   getSaveHook () {
     const createdAtField = this[$createdAt]
     const updatedAtField = this[$updatedAt]
+    const shouldDisableSaveHook = this[$options]['disableSaveHook']
 
     const saveFunc = function (next) {
+      if (shouldDisableSaveHook && !this.isNew) {
+        return next()
+      }
+
       const now = new Date()
 
       if (this.isNew) {
