@@ -23,6 +23,9 @@ $ yarn add happy-mongoose-timestamps
 * `updatedAt (default: updatedAt)`: Name of the schema field to store the updated at value.
 * `shouldUpdateSchema (default: false)`: Whether or not the plugin should add `createdAt` and `updatedAt` fields to the given schema, if they do not already exist.
 * `disableSaveHook (default: false)`: Whether or not to disable the pre-save hook functionality.
+* `forceCreateHook (default: true)`: Whether or not to force the saveHook if the item is new.
+Disabling saveHook will disable the "createHook" since a create action will call saveHook. So if you set `disableSaveHook` to true and `forceCreateHook` to false `createdAt` will never be created and `updatedAt`
+will not be set on the creation.
 * `disableUpdateHook (default: false)`: Whether or not to disable the pre-update hook functionality.
 * `disableUpdateOneHook (default: false)`: Whether or not to disable the pre-updateOne hook functionality.
 

@@ -33,6 +33,8 @@ const $updatedAt = Symbol('updatedAt')
  * @param {Boolean} [options.shouldUpdateSchema=false] - Will add createdAt and updatedAt fields to the given schema if they do not exist.
  * @param {[String]} [options.blacklist=[]] - Contains an array of field names which will NOT trigger save or update hooks.
  * @param {Boolean} [options.disableSaveHook=false] - Will disable pre hook functionality for SAVE operations.
+ * @param {Boolean} [options.forceCreateHook=true] - Will force createdAt and updatedAt to be created on the creation of the item,
+ * if you set disableSaveHook to true and forceCreateHook to false createdAt will never be created.
  * @param {Boolean} [options.disableUpdateHook=false] - Will disable pre hook functionality for UPDATE operations.
  * @param {Boolean} [options.disableUpdateOneHook=false] - Will disable pre hook functionality for updateOne operations.
  */
@@ -129,9 +131,12 @@ class HappyMongooseTimestamps {
     const createdAtField = this[$createdAt]
     const updatedAtField = this[$updatedAt]
     const shouldDisableSaveHook = this[$options]['disableSaveHook']
+    const shouldForceCreateHook = this[$options]['forceCreateHook']
 
     const saveFunc = function (next) {
-      if (shouldDisableSaveHook && !this.isNew) {
+      const canEnterSaveFunction = !(shouldDisableSaveHook && (!shouldForceCreateHook || !this.isNew))
+
+      if (!canEnterSaveFunction) {
         return next()
       }
 
