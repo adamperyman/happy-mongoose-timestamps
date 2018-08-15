@@ -33,6 +33,8 @@ const $updatedAt = Symbol('updatedAt')
  * @param {Boolean} [options.shouldUpdateSchema=false] - Will add createdAt and updatedAt fields to the given schema if they do not exist.
  * @param {[String]} [options.blacklist=[]] - Contains an array of field names which will NOT trigger save or update hooks.
  * @param {Boolean} [options.disableSaveHook=false] - Will disable pre hook functionality for SAVE operations.
+ * @param {Boolean} [options.forceCreateHook=false] - Will force createdAt and updatedAt to be created on the creation of the item,
+ * if you set disableSaveHook to true and forceCreateHook to false createdAt will never be created.
  * @param {Boolean} [options.disableUpdateHook=false] - Will disable pre hook functionality for UPDATE operations.
  * @param {Boolean} [options.disableUpdateOneHook=false] - Will disable pre hook functionality for updateOne operations.
  */
@@ -91,12 +93,6 @@ class HappyMongooseTimestamps {
    * Attaches the new save hook to the given schema.
    */
   save () {
-    const shouldDisableSaveHook = this[$options]['disableSaveHook']
-
-    if (shouldDisableSaveHook) {
-      return
-    }
-
     this[$schema].pre('save', this.getSaveHook())
   }
 
@@ -104,7 +100,7 @@ class HappyMongooseTimestamps {
    * Attaches the new update hook to the given schema.
    */
   update () {
-    const shouldDisableUpdateHook = this[$options]['disableUpdateHook']
+    const shouldDisableUpdateHook = !!this[$options]['disableUpdateHook']
 
     if (shouldDisableUpdateHook) {
       return
@@ -117,7 +113,7 @@ class HappyMongooseTimestamps {
    * Attaches the new updateOne hook to the given schema.
    */
   updateOne () {
-    const shouldDisableUpdateOneHook = this[$options]['disableUpdateOneHook']
+    const shouldDisableUpdateOneHook = !!this[$options]['disableUpdateOneHook']
 
     if (shouldDisableUpdateOneHook) {
       return
@@ -135,7 +131,16 @@ class HappyMongooseTimestamps {
     const createdAtField = this[$createdAt]
     const updatedAtField = this[$updatedAt]
 
+    const shouldDisableSaveHook = !!this[$options]['disableSaveHook']
+    const shouldForceCreateHook = !!this[$options]['forceCreateHook']
+
     const saveFunc = function (next) {
+      const canEnterSaveFunction = !(shouldDisableSaveHook && (!shouldForceCreateHook || !this.isNew))
+
+      if (!canEnterSaveFunction) {
+        return next()
+      }
+
       const now = new Date()
 
       if (this.isNew) {
