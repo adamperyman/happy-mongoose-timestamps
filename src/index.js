@@ -185,8 +185,7 @@ class HappyMongooseTimestamps {
           [updatedAtField]: now
         },
         $setOnInsert: {
-          [createdAtField]: now,
-          [updatedAtField]: now
+          [createdAtField]: now
         }
       })
 
