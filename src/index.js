@@ -37,6 +37,7 @@ const $updatedAt = Symbol('updatedAt')
  * if you set disableSaveHook to true and forceCreateHook to false createdAt will never be created.
  * @param {Boolean} [options.disableUpdateHook=false] - Will disable pre hook functionality for UPDATE operations.
  * @param {Boolean} [options.disableUpdateOneHook=false] - Will disable pre hook functionality for updateOne operations.
+ * @param {Boolean} [options.disableFindOneAndUpdate=false] - Will disable pre hook functionality for findOneAndUpdate operations.
  */
 class HappyMongooseTimestamps {
   constructor (schema, options = {}) {
@@ -123,6 +124,19 @@ class HappyMongooseTimestamps {
   }
 
   /**
+   * Attaches the find one and update hook to the given schema.
+   */
+  findOneAndUpdate () {
+    const shouldDisableFindOneAndUpdateHook = !!this[$options]['disableFindOneAndUpdate']
+
+    if (shouldDisableFindOneAndUpdateHook) {
+      return
+    }
+
+    this[$schema].pre('findOneAndUpdate', this.getUpdateHook())
+  }
+
+  /**
    * Generates the function to be executed BEFORE any SAVE operations on the given schema.
    *
    * @returns {Function} Hook function to be applied to any SAVE operations.
@@ -202,4 +216,5 @@ export default (schema, options) => {
   plugin.save()
   plugin.update()
   plugin.updateOne()
+  plugin.findOneAndUpdate()
 }
